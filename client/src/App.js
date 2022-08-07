@@ -31,15 +31,20 @@ function App() {
         }        
     }
 
+    const closePopUpWindowHandler = () => {
+        setShowLogin(false)
+        setShowRegister(false)
+    }
+
     return (
         <div className="App">
             {/* <!-- Page Loader --> */}
             {dummyLoader && <PageLoader />}
 
-            <Navbar showLogin={()=>menuClickHandler('login')} showRegister={()=>menuClickHandler('register')}/>
+            <Navbar showLogin={()=>menuClickHandler('login')} showRegister={()=>menuClickHandler('register')} />
 
-            {showLogin && <Login />}
-            {showRegister && <Register />}
+            {showLogin && <Login closeWindow={closePopUpWindowHandler}/>}
+            {showRegister && <Register closeWindow={closePopUpWindowHandler}/>}
 
             
         </div>
