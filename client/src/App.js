@@ -16,12 +16,12 @@ function App() {
         }, 500) 
     },[])
     //-----------------------
-
+//test new branch
     const [showLogin, setShowLogin] = useState(false)
     const [showRegister, setShowRegister] = useState(false)
 
     const menuClickHandler = (submenu) => {
-        console.log('handler')
+        console.log('handler new branch')
         if(submenu == 'login'){
             setShowLogin(true)
             console.log('login triggered');
