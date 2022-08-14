@@ -12,6 +12,7 @@ import { Navbar } from './components/common/Navbar'
 import { Login } from './components/users/Login'
 import { Register } from './components/users/Register'
 import { GalleryPreview } from './components/homepage/GalleryPreview'
+import { Logout } from './components/users/Logout'
 
 function App() {
     // THIS IS ONLY DUMMY LOADING SCREEN
@@ -58,22 +59,26 @@ function App() {
         setAuthenticate(authData)
     }
 
+    const logoutHandler = () => {
+        setAuthenticate({})
+    }
+
 
     return (
-        <AuthContext.Provider value={{user: authenticate, loginHandler}}>            
+        <AuthContext.Provider value={{user: authenticate, loginHandler, logoutHandler}}>            
             <div className="App">
                 {/* <!-- Page Loader --> */}
                 {dummyLoader && <PageLoader />}
 
                 <Navbar showLogin={()=>menuClickHandler('login')} showRegister={()=>menuClickHandler('register')} />
 
-                {/* {showLogin && <Login closeWindow={closePopUpWindowHandler}/>} */}
-                {showRegister && <Register closeWindow={closePopUpWindowHandler}/>}
 
                 
                 <Routes>
                     <Route path="/" element={<GalleryPreview dogs={dogs}/>}/>
-                    {showLogin && <Route path="/login" element={<Login closeWindow={closePopUpWindowHandler}/>}/>}
+                    
+                    <Route path="/login" element={<Login closeWindow={closePopUpWindowHandler}/>}/>
+                    <Route path="/logout" element={<Logout closeWindow={closePopUpWindowHandler}/>}/>
                     <Route path="/register" element={<Register closeWindow={closePopUpWindowHandler}/>}/>                
                 </Routes>
                 
