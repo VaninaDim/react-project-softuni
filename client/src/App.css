@@ -6,6 +6,35 @@ https://templatemo.com/tm-556-catalog-z
 
 */
 
+
+/*NEW STUFF*/
+.galleryPreview{
+  border: 2px solid #086969;
+  border-radius: 10px;
+  width: 500px;
+  height: 350px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-left: 50px;
+  margin-top: 50px;
+}
+
+.photoPreview{
+  margin: 5px;
+  border: 1px solid #086969;
+  border-radius: 5px;
+  height: 250px;
+  width: 150px;
+}
+
+.galleryImg{
+  width: 140px;
+  left: 2.5%;
+  position: relative;
+}
+
+/*INITIAL VERSION*/
 #loader-wrapper {
   position: fixed;
   top: 0;
@@ -1107,42 +1136,15 @@ ul {
   width: 100%;
 }
 
-.input-wrapper span {
-  display: flex;
-  align-items: center;
-  padding: 6px 12px;
-  font-weight: 400;
-  line-height: 1;
-  color: #555;
-  text-align: center;
-  background-color: #f7f7f7;
-  border: 1px solid #d5dee6;
-  border-top-left-radius: 4px;
-  border-bottom-left-radius: 4px;
-}
-
-.input-wrapper span i {
-  width: 28px;
-  height: 1 em;
-  min-width: 28px;
-  display: inline-block;
-  font-size: 1.2em;
-  color: #000000;
-  vertical-align: -0.125em;
-}
-
 .input-wrapper input {
   width: 100%;
   font-weight: 400;
   line-height: 1.5;
   border: 1px solid #d5dee6;
-  border-left: none;
-  outline: none;
   height: 50px;
   padding: 6px 12px;
   background-color: #f7f7f7;
-  border-top-right-radius: 1.25rem;
-  border-bottom-right-radius: 1.25rem;
+  border-radius: 0.5rem;
 }
 
 .form-row {

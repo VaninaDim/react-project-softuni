@@ -1,4 +1,14 @@
 export const Login = ({closeWindow}) => {
+    const onSubmit = (e) => {
+        e.preventDefault()
+        const {
+            email,
+            password
+        } = Object.fromEntries(new FormData(e.target))
+
+        console.log(email, password, 'logged in')
+    }
+
     return (
         <div className="overlay">
             <div className="backdrop" onClick={closeWindow}></div>
@@ -15,23 +25,19 @@ export const Login = ({closeWindow}) => {
                             </svg>
                         </button>
                     </header>
-                    <form >
+                    <form onSubmit={onSubmit}>
                         <div className="form-row">
                             <div className="form-group">
                                 <label htmlFor="email">Email</label>
                                 <div className="input-wrapper">
-                                <span><i className="fa-solid fa-envelope"></i></span>
-                                <input id="email" name="email" type="text"  />
+                                    <input id="email" name="email" type="text"  />
                                 </div>
-                                {<p className="form-error">Email is not valid!</p>}
                             </div>
                             <div className="form-group">
                                 <label htmlFor="phoneNumber">password</label>
                                 <div className="input-wrapper">
-                                <span><i className="fa-solid fa-phone"></i></span>
-                                <input id="phoneNumber" name="phoneNumber" type="text"  />
+                                    <input id="password" name="password" type="text"  />
                                 </div>
-                                {<p className="form-error">password is not valid!</p>}
                             </div>
                         </div>    
                         
