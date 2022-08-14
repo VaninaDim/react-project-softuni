@@ -50,7 +50,7 @@ export const Login = ({closeWindow}) => {
                                 </div>
                             </div>
                             <div className="form-group">
-                                <label htmlFor="phoneNumber">password</label>
+                                <label htmlFor="password">password</label>
                                 <div className="input-wrapper">
                                     <input id="password" name="password" type="text"  />
                                 </div>

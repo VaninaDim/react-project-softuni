@@ -1,4 +1,37 @@
+import { useContext } from 'react'
+import { useNavigate } from 'react-router-dom'
+import * as authentication from '../../services/authentication'
+import { AuthContext } from '../../contexts/AuthContext'
+
+
 export const Register = ({closeWindow}) => {
+    const navigate = useNavigate()
+    const {loginHandler} = useContext(AuthContext)
+
+    const onSubmit = (e) => {
+        e.preventDefault()
+        const {
+            email,
+            password,
+            repeatPass,
+        } = Object.fromEntries(new FormData(e.target))
+
+        if (password != repeatPass){
+            console.log('error')
+            return
+        }
+
+        authentication.register(email, password)
+        .then(authData => {
+            console.log(authData, 'register')
+            loginHandler(authData)
+            navigate('/')
+        })
+        .catch(() => {
+            navigate('/')
+        })
+    }
+
     return (
         <div className="overlay">
             <div className="backdrop" onClick={closeWindow}></div>
@@ -15,46 +48,31 @@ export const Register = ({closeWindow}) => {
                             </svg>
                         </button>
                     </header>
-                    <form >
+                    <form onSubmit={onSubmit}>
                         <div className="form-row">
                             <div className="form-group">
-                                <label htmlFor="firstName">First name</label>
+                                <label htmlFor="email">Email</label>
                                 <div className="input-wrapper">
-                                <span><i className="fa-solid fa-user"></i></span>
-                                <input id="firstName" name="firstName" type="text" />
+                                <input id="email" name="email" type="text"  />
                                 </div>
-                                {<p className="form-error">
-                                First name should be at least 3 characters long!
-                                </p>}
-                            </div>
-                            <div className="form-group">
-                                <label htmlFor="lastName">Last name</label>
-                                <div className="input-wrapper">
-                                <span><i className="fa-solid fa-user"></i></span>
-                                <input id="lastName" name="lastName" type="text"  />
-                                </div>
-                                {<p className="form-error">
-                                Last name should be at least 3 characters long!
-                                </p>}
                             </div>
                         </div>
 
                         <div className="form-row">
                             <div className="form-group">
-                                <label htmlFor="email">Email</label>
+                                <label htmlFor="password">Password</label>
                                 <div className="input-wrapper">
-                                <span><i className="fa-solid fa-envelope"></i></span>
-                                <input id="email" name="email" type="text"  />
+                                <input id="password" name="password" type="text"  />
                                 </div>
-                                {<p className="form-error">Email is not valid!</p>}
                             </div>
+                        </div>
+
+                        <div className="form-row">
                             <div className="form-group">
-                                <label htmlFor="phoneNumber">Phone number</label>
+                                <label htmlFor="repeatPass">Repeat password</label>
                                 <div className="input-wrapper">
-                                <span><i className="fa-solid fa-phone"></i></span>
-                                <input id="phoneNumber" name="phoneNumber" type="text"  />
+                                <input id="repeatPass" name="repeatPass" type="text"  />
                                 </div>
-                                {<p className="form-error">Phone number is not valid!</p>}
                             </div>
                         </div>
                         
