@@ -1210,3 +1210,9 @@ ul {
     font-size: 0.9rem;
   }
 }
+
+.errorText{
+  color: red;
+  font-weight: 600;
+  font-style: italic;
+}

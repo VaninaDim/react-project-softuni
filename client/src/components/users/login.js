@@ -1,4 +1,11 @@
+import { useContext } from 'react'
+import { useNavigate } from 'react-router-dom'
+import * as authentication from '../../services/authentication'
+import { AuthContext } from '../../contexts/AuthContext'
+
 export const Login = ({closeWindow}) => {
+    const {loginHandler} = useContext(AuthContext)
+    const navigate = useNavigate()
     const onSubmit = (e) => {
         e.preventDefault()
         const {
@@ -7,6 +14,15 @@ export const Login = ({closeWindow}) => {
         } = Object.fromEntries(new FormData(e.target))
 
         console.log(email, password, 'logged in')
+        authentication.login(email, password)
+        .then(authData => {
+            console.log(authData)
+            loginHandler(authData)
+            navigate('/')
+        })
+        .catch(() => {
+            navigate('/')
+        })
     }
 
     return (
