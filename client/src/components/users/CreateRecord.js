@@ -1,29 +1,24 @@
 import { useContext } from 'react'
 import { useNavigate } from 'react-router-dom'
-import * as authentication from '../../services/authentication'
-import { AuthContext } from '../../contexts/AuthContext'
+// import * as authentication from '../../services/authentication'
+import { DogsContext } from '../../contexts/DogsContext'
+import * as dogService from '../../services/dogService'
 
 
-export const Register = ({closeWindow}) => {
+
+export const CreateRecord = ({closeWindow}) => {
     const navigate = useNavigate()
-    const {loginHandler} = useContext(AuthContext)
+    const {createDogRecordHandler} = useContext(DogsContext)
 
     const onSubmit = (e) => {
         e.preventDefault()
-        const {
-            email,
-            password,
-            repeatPass,
-        } = Object.fromEntries(new FormData(e.target))
+        const dogRecord = Object.fromEntries(new FormData(e.target))
+console.log(dogRecord)
 
-        if (password != repeatPass){
-            console.log('error')
-            return
-        }
-
-        authentication.register(email, password)
-        .then(authData => {
-            loginHandler(authData)
+        dogService.createDog(dogRecord)
+        .then(newRecord => {
+            console.log(newRecord, 'created new dog record')
+            createDogRecordHandler(newRecord)
             navigate('/')
         })
         .catch(() => {
@@ -37,7 +32,7 @@ export const Register = ({closeWindow}) => {
             <div className="modal">
                 <div className="user-container">
                     <header className="headers">
-                        <h2>Registration</h2>
+                        <h2>New record</h2>
                         <button className="btn close" onClick={closeWindow}>
                             <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="xmark"
                                 className="svg-inline--fa fa-xmark" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512">
@@ -50,36 +45,43 @@ export const Register = ({closeWindow}) => {
                     <form onSubmit={onSubmit}>
                         <div className="form-row">
                             <div className="form-group">
-                                <label htmlFor="email">Email</label>
+                                <label htmlFor="name">Dog name</label>
                                 <div className="input-wrapper">
-                                <input id="email" name="email" type="text"  />
+                                <input id="name" name="name" type="text"  />
                                 </div>
                             </div>
                         </div>
 
                         <div className="form-row">
                             <div className="form-group">
-                                <label htmlFor="password">Password</label>
+                                <label htmlFor="age">Age</label>
                                 <div className="input-wrapper">
-                                <input id="password" name="password" type="text"  />
+                                <input id="age" name="age" type="text"  />
                                 </div>
                             </div>
                         </div>
 
                         <div className="form-row">
                             <div className="form-group">
-                                <label htmlFor="repeatPass">Repeat password</label>
+                                <label htmlFor="url">Image URL</label>
                                 <div className="input-wrapper">
-                                <input id="repeatPass" name="repeatPass" type="text"  />
+                                <input id="url" name="url" type="text"  />
+                                </div>
+                            </div>
+                        </div>
+
+                        <div className="form-row">
+                            <div className="form-group">
+                                <label htmlFor="description">Description</label>
+                                <div className="textarea-wrapper">
+                                <textarea id="description" name="description" rows="5" cols="40"></textarea>
                                 </div>
                             </div>
                         </div>
                         
                         <div id="form-actions">
-                            <button id="action-save" className="btn" type="submit" >Register</button>
-                            <button id="action-cancel" className="btn" type="button" onClick={closeWindow}>
-                                Cancel
-                            </button>
+                            <button id="action-save" className="btn" type="submit" >Create</button>
+                            <button id="action-cancel" className="btn" type="button" onClick={closeWindow}>Cancel</button>
                         </div>
                     </form>
                 </div>

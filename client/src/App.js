@@ -1,10 +1,11 @@
 import { useState, useEffect } from 'react'
 import { Routes, Route, useNavigate } from 'react-router-dom'
 import './App.css'
-import mockdata from './mockdata.json'
+// import mockdata from './mockdata.json'
 
 import * as dogService from './services/dogService'
 import { AuthContext } from './contexts/AuthContext'
+import { DogsContext } from './contexts/DogsContext'
 
 import { PageLoader } from './components/common/PageLoader'
 import { Navbar } from './components/common/Navbar'
@@ -12,6 +13,7 @@ import { Login } from './components/users/Login'
 import { Register } from './components/users/Register'
 import { GalleryPreview } from './components/homepage/GalleryPreview'
 import { Logout } from './components/users/Logout'
+import { CreateRecord } from './components/users/CreateRecord'
 import useLocalStorage from './hooks/useLocalStorage'
 
 import { getAll } from './services/dogService';
@@ -41,25 +43,24 @@ function App() {
     const [x, setX] = useState([])
     const [showLogin, setShowLogin] = useState(false)
     const [showRegister, setShowRegister] = useState(false)    
-    const [authenticate, setAuthenticate] = useLocalStorage({})
+    const [authenticate, setAuthenticate] = useLocalStorage('authUser', {})
 
-    useEffect(() => {
-        // dogService.getAll()
-        //     .then(result => {
-        //         setDogs(result);
-        //     });
+    // useEffect(() => {
+    //     // dogService.getAll()
+    //     //     .then(result => {
+    //     //         setDogs(result);
+    //     //     });
 
-        setDogs(mockdata)
-    }, []);
+    //     setDogs(mockdata)
+    // }, []);
 
     useEffect(() => {
         getAll()
             .then(result => {
                 console.log(result)
-                setX(result);
+                setDogs(result);
             });
 
-        //setDogs(mockdata)
     }, []);
     const menuClickHandler = (submenu) => {
         if(submenu == 'login'){
@@ -85,8 +86,15 @@ function App() {
         setAuthenticate({})
     }
 
+    const createDogRecordHandler = (dogRecord) => {
+        setDogs(state => [
+            ...state,
+            dogRecord
+        ])
+        navigate('/')
+    }
 
-    console.log(x[0], mockdata)
+
     return (
         <AuthContext.Provider value={{user: authenticate, loginHandler, logoutHandler}}>            
             <div className="App">
@@ -95,15 +103,15 @@ function App() {
 
                 <Navbar showLogin={()=>menuClickHandler('login')} showRegister={()=>menuClickHandler('register')} />
 
-                
-                <Routes>
-                    <Route path="/" element={<GalleryPreview dogs={x}/>}/>
-                    
-                    <Route path="/login" element={<Login closeWindow={closePopUpWindowHandler}/>}/>
-                    <Route path="/logout" element={<Logout closeWindow={closePopUpWindowHandler}/>}/>
-                    <Route path="/register" element={<Register closeWindow={closePopUpWindowHandler}/>}/>                
-                </Routes>
-                
+                <DogsContext.Provider value={{dogs, createDogRecordHandler}}>
+                    <Routes>
+                        <Route path="/" element={<GalleryPreview dogs={dogs}/>}/>
+                        <Route path="/create-record" element={<CreateRecord closeWindow={closePopUpWindowHandler}/>}/>
+                        <Route path="/login" element={<Login closeWindow={closePopUpWindowHandler}/>}/>
+                        <Route path="/logout" element={<Logout closeWindow={closePopUpWindowHandler}/>}/>
+                        <Route path="/register" element={<Register closeWindow={closePopUpWindowHandler}/>}/>                
+                    </Routes>
+                </DogsContext.Provider>
             </div>
         </AuthContext.Provider>
     );

@@ -249,36 +249,21 @@ a.tm-text-primary:hover { color:#666666; }
 .nav-item { margin-right: 30px; }
 .nav-item:last-child { margin-right: 0; }
 
-button.nav-link{
-  border: none;
-  cursor: pointer;
-}
 
 .nav-link {
   color: #666666;
   border-bottom: 4px solid transparent;
   font-size: 1.2rem;
+  padding: 5px;  
+  border: 2px solid #086969;
+  border-radius: 7px;
 }
 
-.nav-link-1.active,
-.nav-link-1:hover {
-  border-bottom: 3px solid #33CCFF;
+.nav-link.active,
+.nav-link:hover {
+  border: 3px solid #11d2d2;
 }
 
-.nav-link-2.active,
-.nav-link-2:hover {
-  border-bottom: 3px solid #FF6666;
-}
-
-.nav-link-3.active,
-.nav-link-3:hover {
-  border-bottom: 3px solid #33CC66;
-}
-
-.nav-link-4.active,
-.nav-link-4:hover {
-  border-bottom: 3px solid #CC66CC;
-}
 
 .navbar-nav{
   display: flex;
@@ -1122,7 +1107,7 @@ ul {
   margin-bottom: 0px;
 }
 
-.input-wrapper {
+.input-wrapper, .textfield-wrapper {
   display: flex;
   align-items: stretch;
   width: 100%;
@@ -1134,6 +1119,17 @@ ul {
   line-height: 1.5;
   border: 1px solid #d5dee6;
   height: 50px;
+  padding: 6px 12px;
+  background-color: #f7f7f7;
+  border-radius: 0.5rem;
+}
+
+
+.textarea-wrapper textarea {
+  width: 100%;
+  font-weight: 400;
+  line-height: 1.5;
+  border: 1px solid #d5dee6;
   padding: 6px 12px;
   background-color: #f7f7f7;
   border-radius: 0.5rem;
