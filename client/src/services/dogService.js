@@ -10,4 +10,7 @@ export const getAll = () => {
 export const createDog = (name, age, url, description) => {
     return request.post(`${baseUrl}/data/dogs`, {name, age, url, description})
 }
-    
+   
+export const updateDog = (name, age, url, description) =>{
+    return request.put(`${baseUrl}/data/dogs`, {name, age, url, description})
+}

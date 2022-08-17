@@ -41,20 +41,8 @@ function App() {
     //-----------------------
 
     const navigate = useNavigate()
-    const [dogs, setDogs] = useState([])
-    // const [x, setX] = useState([])
-    const [showLogin, setShowLogin] = useState(false)
-    const [showRegister, setShowRegister] = useState(false)    
+    const [dogs, setDogs] = useState([])   
     const [authenticate, setAuthenticate] = useLocalStorage('authUser', {})
-
-    // useEffect(() => {
-    //     // dogService.getAll()
-    //     //     .then(result => {
-    //     //         setDogs(result);
-    //     //     });
-
-    //     setDogs(mockdata)
-    // }, []);
 
     useEffect(() => {
         getAll()
@@ -64,19 +52,8 @@ function App() {
             });
 
     }, []);
-    const menuClickHandler = (submenu) => {
-        if(submenu == 'login'){
-            setShowLogin(true)
-            console.log('login triggered');
-        }else if (submenu == 'register'){
-            setShowRegister(true)
-            console.log('register triggered');
-        }        
-    }
 
     const closePopUpWindowHandler = () => {
-        setShowLogin(false)
-        setShowRegister(false)
         navigate('/')
     }
 
@@ -103,14 +80,13 @@ function App() {
                 {/* <!-- Page Loader --> */}
                 {dummyLoader && <PageLoader />}
 
-                <Navbar showLogin={()=>menuClickHandler('login')} showRegister={()=>menuClickHandler('register')} />
+                <Navbar />
 
                 <DogsContext.Provider value={{dogs, createDogRecordHandler}}>
                     <Routes>
                         <Route path="/" element={<GalleryPreview dogs={dogs}/>}/>
                         <Route path="/create-record" element={<CreateRecord closeWindow={closePopUpWindowHandler}/>}/>
                         <Route path="/user-collection" element={<UserCollection />}/>
-                        <Route path="/dog-card" element={<DogCard closeWindow={closePopUpWindowHandler}/>}/>
                         <Route path="/login" element={<Login closeWindow={closePopUpWindowHandler}/>}/>
                         <Route path="/logout" element={<Logout closeWindow={closePopUpWindowHandler}/>}/>
                         <Route path="/register" element={<Register closeWindow={closePopUpWindowHandler}/>}/>                

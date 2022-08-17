@@ -38,7 +38,11 @@
     margin: 10px;
 }
 
-.navLink {
+.cardNavBtn>button{
+    all: unset;
+    cursor: pointer;
+}
+.navLink, button.navLink {
     color: #666666;
     border-bottom: 4px solid transparent;
     font-size: 16px;
@@ -48,10 +52,6 @@
     border-radius: 7px;
 }
 
-button{
-    all: unset;
-    cursor: pointer;
-}
 .navLink:hover{    
     border: 2px solid #e86a35;
 }
