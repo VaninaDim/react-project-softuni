@@ -1,0 +1,57 @@
+.galleryPreview{
+    width: auto;
+    height: auto;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    flex-wrap: wrap;
+    margin-left: 50px;
+    margin-top: 50px;
+}
+
+.photoPreview{
+    margin: 5px;
+    border: 1px solid #086969;
+    border-radius: 5px;
+    height: 380px;
+    width: 250px;
+    display: flex;
+    align-items: center;
+    flex-flow: column;
+    padding: 5px;
+}
+
+.description{
+    height: 200px;
+    overflow:scroll;
+    overflow-x:hidden;
+}
+.galleryImg{
+    max-width: 240px;
+    max-height: 150px;
+    margin: 10px 0 10px 0;
+}
+
+
+.cardNavBtn { 
+    display: inline;
+    margin: 10px;
+}
+
+.navLink {
+    color: #666666;
+    border-bottom: 4px solid transparent;
+    font-size: 16px;
+    margin: 2px;
+    padding: 5px;  
+    border: 2px solid #db6c4487;
+    border-radius: 7px;
+}
+
+button{
+    all: unset;
+    cursor: pointer;
+}
+.navLink:hover{    
+    border: 2px solid #e86a35;
+}

@@ -3,16 +3,23 @@ import { useContext } from 'react';
 import { Link } from 'react-router-dom';
 import { AuthContext } from '../../contexts/AuthContext';
 
-export const Navbar = ({showLogin, showRegister, showCreateRecord}) => {
+export const Navbar = () => {
     const {user} = useContext(AuthContext)
 
     return (
         <div className="container-fluid">                
             <ul className="navbar-nav ml-auto mb-2 mb-lg-0">
+                       
+                <li className="nav-item">
+                    <Link className="nav-link" to='/' >Gallery</Link>
+                </li>
                 {user.accessToken ?
                     <>
                         <li className="nav-item">
-                            <Link className="nav-link" to='/create-record' onClick={showCreateRecord}>Create new entry</Link>
+                            <Link className="nav-link" to='/user-collection'>My dogs</Link>
+                        </li>
+                        <li className="nav-item">
+                            <Link className="nav-link" to='/create-record'>Create new entry</Link>
                         </li>
                         <li className="nav-item">
                             <Link className="nav-link" to='/logout' >Logout</Link>
@@ -21,19 +28,13 @@ export const Navbar = ({showLogin, showRegister, showCreateRecord}) => {
                     :
                     <>
                         <li className="nav-item">
-                            <Link className="nav-link" to='/register' onClick={showRegister}>Register</Link>
+                            <Link className="nav-link" to='/register'>Register</Link>
                         </li>
                         <li className="nav-item">
-                            <Link className="nav-link" to='/login' onClick={showLogin}>Login</Link>
+                            <Link className="nav-link" to='/login'>Login</Link>
                         </li>
                     </>            
-                }                
-                <li className="nav-item">
-                    <Link className="nav-link" to='/' href="index.html">Gallery</Link>
-                </li>
-                <li className="nav-item">
-                    <Link className="nav-link" to='/contact' href="contact.html">Contact</Link>
-                </li>
+                }      
             </ul>
         </div>
     )

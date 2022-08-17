@@ -11,9 +11,11 @@ import { PageLoader } from './components/common/PageLoader'
 import { Navbar } from './components/common/Navbar'
 import { Login } from './components/users/Login'
 import { Register } from './components/users/Register'
-import { GalleryPreview } from './components/homepage/GalleryPreview'
+import { GalleryPreview } from './components/dogs/GalleryPreview'
 import { Logout } from './components/users/Logout'
-import { CreateRecord } from './components/users/CreateRecord'
+import { CreateRecord } from './components/dogs/CreateRecord'
+import { UserCollection } from './components/dogs/UserCollection'
+import { DogCard } from './components/dogs/DogCard'
 import useLocalStorage from './hooks/useLocalStorage'
 
 import { getAll } from './services/dogService';
@@ -40,7 +42,7 @@ function App() {
 
     const navigate = useNavigate()
     const [dogs, setDogs] = useState([])
-    const [x, setX] = useState([])
+    // const [x, setX] = useState([])
     const [showLogin, setShowLogin] = useState(false)
     const [showRegister, setShowRegister] = useState(false)    
     const [authenticate, setAuthenticate] = useLocalStorage('authUser', {})
@@ -107,6 +109,8 @@ function App() {
                     <Routes>
                         <Route path="/" element={<GalleryPreview dogs={dogs}/>}/>
                         <Route path="/create-record" element={<CreateRecord closeWindow={closePopUpWindowHandler}/>}/>
+                        <Route path="/user-collection" element={<UserCollection />}/>
+                        <Route path="/dog-card" element={<DogCard closeWindow={closePopUpWindowHandler}/>}/>
                         <Route path="/login" element={<Login closeWindow={closePopUpWindowHandler}/>}/>
                         <Route path="/logout" element={<Logout closeWindow={closePopUpWindowHandler}/>}/>
                         <Route path="/register" element={<Register closeWindow={closePopUpWindowHandler}/>}/>                
