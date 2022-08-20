@@ -15,7 +15,7 @@ import { GalleryPreview } from './components/dogs/GalleryPreview'
 import { Logout } from './components/users/Logout'
 import { CreateRecord } from './components/dogs/CreateRecord'
 import { UserCollection } from './components/dogs/UserCollection'
-import { DogCard } from './components/dogs/DogCard'
+import { ErrorPage } from './components/common/404'
 import useLocalStorage from './hooks/useLocalStorage'
 
 import { getAll } from './services/dogService';
@@ -47,8 +47,10 @@ function App() {
     useEffect(() => {
         getAll()
             .then(result => {
-                console.log(result)
                 setDogs(result);
+            })
+            .catch((e) => {
+                console.log(e, 'probably need to clear cache')
             });
 
     }, []);
@@ -70,9 +72,23 @@ function App() {
             ...state,
             dogRecord
         ])
-        navigate('/')
     }
 
+    const updateDogRecordHandler = (dogRecord) => {
+        setDogs(state => state.map(x => x._id === dogRecord._id ? dogRecord : x))
+    }
+
+    
+    const deleteDogRecordHandler = () => {
+        getAll()
+            .then(result => {
+                console.log(result)
+                setDogs(result);
+            })
+            .catch((e) => {
+                console.log(e)
+            });
+    }
 
     return (
         <AuthContext.Provider value={{user: authenticate, loginHandler, logoutHandler}}>            
@@ -81,15 +97,16 @@ function App() {
                 {dummyLoader && <PageLoader />}
 
                 <Navbar />
-
-                <DogsContext.Provider value={{dogs, createDogRecordHandler}}>
+                <h3 style={{marginLeft: '20px'}}>Welcome, {authenticate.accessToken ? authenticate.email : 'Guest'}</h3>
+                <DogsContext.Provider value={{dogs, createDogRecordHandler, updateDogRecordHandler, deleteDogRecordHandler}}>
                     <Routes>
                         <Route path="/" element={<GalleryPreview dogs={dogs}/>}/>
                         <Route path="/create-record" element={<CreateRecord closeWindow={closePopUpWindowHandler}/>}/>
                         <Route path="/user-collection" element={<UserCollection />}/>
                         <Route path="/login" element={<Login closeWindow={closePopUpWindowHandler}/>}/>
                         <Route path="/logout" element={<Logout closeWindow={closePopUpWindowHandler}/>}/>
-                        <Route path="/register" element={<Register closeWindow={closePopUpWindowHandler}/>}/>                
+                        <Route path="/register" element={<Register closeWindow={closePopUpWindowHandler}/>}/> 
+                        <Route path="/404" element={<ErrorPage />}/>                
                     </Routes>
                 </DogsContext.Provider>
             </div>

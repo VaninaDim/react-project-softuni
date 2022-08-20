@@ -1,4 +1,4 @@
-import { useContext } from 'react'
+import { useContext, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import * as authentication from '../../services/authentication'
 import { AuthContext } from '../../contexts/AuthContext'
@@ -6,6 +6,9 @@ import { AuthContext } from '../../contexts/AuthContext'
 export const Login = ({closeWindow}) => {
     const {loginHandler} = useContext(AuthContext)
     const navigate = useNavigate()
+
+    const [loginErrorMessage, setLoginErrorMessage] = useState(false)
+
     const onSubmit = (e) => {
         e.preventDefault()
         const {
@@ -17,10 +20,15 @@ export const Login = ({closeWindow}) => {
         authentication.login(email, password)
         .then(authData => {
             console.log(authData)
-            loginHandler(authData)
-            navigate('/')
+            if (authData.hasOwnProperty('code') && authData.code == 403){
+                console.log(authData, 'ERROR')
+                setLoginErrorMessage(true)
+            }else {
+                loginHandler(authData)
+                navigate('/')
+            }
         })
-        .catch(() => {
+        .catch((error) => {
             navigate('/')
         })
     }
@@ -52,11 +60,11 @@ export const Login = ({closeWindow}) => {
                             <div className="form-group">
                                 <label htmlFor="password">password</label>
                                 <div className="input-wrapper">
-                                    <input id="password" name="password" type="text"  />
+                                    <input id="password" name="password" type="password"  />
                                 </div>
                             </div>
                         </div>    
-                        
+                        {loginErrorMessage && <div>Username or password is incorrect!</div>}
                         <div id="form-actions">
                             <button id="action-save" className="btn" type="submit" >Login</button>
                             <button id="action-cancel" className="btn" type="button" onClick={closeWindow}>Cancel</button>

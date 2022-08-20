@@ -1,22 +1,20 @@
 import { useContext, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 import classes from './dogs.module.css'
 import { AuthContext } from '../../contexts/AuthContext';
 import { DogsContext } from '../../contexts/DogsContext'
-import { PhotoPreview } from "../dogs/PhotoPreview"
-import { DogCard } from './DogCard';
+import { DogCard } from "./DogCard"
+import { EditDog } from './EditDog';
 
 export const UserCollection = () => {
     const {user} = useContext(AuthContext)
     const {dogs} = useContext(DogsContext)
     const [dogToEdit, setDogToEdit] = useState(false)
-
+    let hasCollection = false
 
     const closePopUpWindowHandler = () => {
         setDogToEdit(false)
     }
 
-    console.log(dogToEdit)
     const showPopUp = (dogId) => {
         for(let i=0; i<dogs.length; i++){
             if (dogs[i]._id == dogId){
@@ -25,11 +23,47 @@ export const UserCollection = () => {
         }        
     }
 
+    dogs.map((dog) => {
+        if(dog._ownerId === user._id) {
+            hasCollection = true
+        }    
+    })
+
 
     return (
-        <div className={classes.galleryPreview}>
-            {dogs.map((dog) => dog._ownerId === user._id && <div key={dog._id}><PhotoPreview id={dog._id} name={dog.name.name} age={dog.name.age} url={dog.name.url} description={dog.name.description} owner={dog._ownerId} showPopUp={showPopUp}/></div> )}
-            {dogToEdit && <DogCard dogId={dogToEdit.id} dog={dogToEdit} closeWindow={closePopUpWindowHandler}/> }
-        </div>
+        <>
+            <h2 className={classes.pageTitle}>My Collection</h2>
+            <div className={classes.galleryPreview}>
+                {hasCollection 
+                    ? 
+                    dogs.map((dog) => 
+                        dog._ownerId === user._id 
+                            && 
+                            <div key={dog._id}>
+                                <DogCard 
+                                    id={dog._id} 
+                                    name={dog.name.name} 
+                                    age={dog.name.age} 
+                                    url={dog.name.url} 
+                                    description={dog.name.description} 
+                                    owner={dog._ownerId} 
+                                    status={dog.name.status}
+                                    showPopUp={showPopUp}
+                                />
+                            </div> 
+                        ) 
+                    : 
+                    <div>This collection is empty. Start it by creating a new entry.</div>
+                    }
+                {dogToEdit 
+                    && 
+                    <EditDog 
+                        dogId={dogToEdit.id} 
+                        dog={dogToEdit} 
+                        closeWindow={closePopUpWindowHandler}
+                    /> 
+                }
+            </div>
+        </>
     )
 }

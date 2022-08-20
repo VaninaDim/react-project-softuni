@@ -1,39 +1,39 @@
 import { useContext } from 'react'
 import { useNavigate } from 'react-router-dom'
-// import * as authentication from '../../services/authentication'
 import { DogsContext } from '../../contexts/DogsContext'
 import * as dogService from '../../services/dogService'
 
-
-
-export const CreateRecord = ({closeWindow}) => {
+export const EditDog = ({closeWindow, dog}) => {  
     const navigate = useNavigate()
-    const {createDogRecordHandler} = useContext(DogsContext)
-    const defaultStatus = 'In shelter'
+    const {updateDogRecordHandler} = useContext(DogsContext)  
 
     const onSubmit = (e) => {
         e.preventDefault()
+        console.log('update', dog._id)
+
         const dogRecord = Object.fromEntries(new FormData(e.target))
         console.log(dogRecord)
 
-        dogService.createDog(dogRecord, defaultStatus)
+        dogService.updateDog(dog._id, dogRecord)
         .then(newRecord => {
-            console.log(newRecord, 'created new dog record')
-            createDogRecordHandler(newRecord)
+            console.log(newRecord, 'updated dog record')
+            updateDogRecordHandler(newRecord)
             navigate('/user-collection')
         })
         .catch(() => {
-            navigate('/')
+            closeWindow()
         })
-    }
 
-    return (
+        closeWindow()
+    }
+    
+    return(
         <div className="overlay">
             <div className="backdrop" onClick={closeWindow}></div>
             <div className="modal">
                 <div className="user-container">
                     <header className="headers">
-                        <h2>New record</h2>
+                        <h2>Dog details</h2>
                         <button className="btn close" onClick={closeWindow}>
                             <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="xmark"
                                 className="svg-inline--fa fa-xmark" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512">
@@ -46,42 +46,47 @@ export const CreateRecord = ({closeWindow}) => {
                     <form onSubmit={onSubmit}>
                         <div className="form-row">
                             <div className="form-group">
-                                <label htmlFor="name">Dog name</label>
+                                <label htmlFor="name">Dog name: </label>
                                 <div className="input-wrapper">
-                                <input id="name" name="name" type="text"  />
+                                    <input id="name" name="name" type="text" defaultValue={dog.name.name} />
                                 </div>
                             </div>
-                        </div>
-
-                        <div className="form-row">
                             <div className="form-group">
-                                <label htmlFor="age">Age</label>
+                                <label htmlFor="age">Dog age:</label>
                                 <div className="input-wrapper">
-                                <input id="age" name="age" type="number"  />
+                                    <input id="age" name="age" type="text"  defaultValue={dog.name.age}/>
                                 </div>
                             </div>
-                        </div>
-
+                        </div>   
                         <div className="form-row">
                             <div className="form-group">
-                                <label htmlFor="url">Image URL</label>
+                                <label htmlFor="url">Image URL: </label>
                                 <div className="input-wrapper">
-                                <input id="url" name="url" type="text"  />
+                                    <input id="url" name="url" type="text" defaultValue={dog.name.url} />
                                 </div>
                             </div>
-                        </div>
-
+                        </div>    
                         <div className="form-row">
                             <div className="form-group">
-                                <label htmlFor="description">Description</label>
+                                <label htmlFor="status">Status: </label>
+                                <select id="status" name="status">
+                                    <option defaultValue={'shelter'}>In shelter</option>
+                                    <option defaultValue={'foster'}>In foster home</option>
+                                    <option defaultValue={'adopted'}>Adopted</option>
+                                </select>
+                            </div>
+                        </div> 
+                        <div className="form-row">
+                            <div className="form-group">
+                                <label htmlFor="description">Description:</label>
                                 <div className="textarea-wrapper">
-                                <textarea id="description" name="description" rows="5" cols="40"></textarea>
+                                <textarea id="description" name="description" rows="5" cols="40" defaultValue={dog.name.description}></textarea>
                                 </div>
-                            </div>
-                        </div>
+                            </div>  
+                        </div> 
                         
                         <div id="form-actions">
-                            <button id="action-save" className="btn" type="submit" >Create</button>
+                            <button id="action-save" className="btn" type="submit" >Update</button>
                             <button id="action-cancel" className="btn" type="button" onClick={closeWindow}>Cancel</button>
                         </div>
                     </form>

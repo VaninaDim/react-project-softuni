@@ -364,14 +364,7 @@ ul {
   font-weight: bold;
 }
 
-.overlay {
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  z-index: 100;
-}
+
 
 .backdrop {
   background-color: rgba(0, 0, 0, 0.75);
@@ -1182,4 +1175,10 @@ ul {
   color: red;
   font-weight: 600;
   font-style: italic;
+}
+
+.App{
+  background-image: url('../public/img/cool-background.png');
+  background-size: cover;
+  min-height: 900px;
 }

@@ -1,13 +1,16 @@
-import { useContext } from 'react'
+import { useContext, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import * as authentication from '../../services/authentication'
 import { AuthContext } from '../../contexts/AuthContext'
+import classes from './users.module.css'
 
 
 export const Register = ({closeWindow}) => {
     const navigate = useNavigate()
     const {loginHandler} = useContext(AuthContext)
+    const [validPass, setValidPass] = useState()
 
+    console.log(validPass)
     const onSubmit = (e) => {
         e.preventDefault()
         const {
@@ -17,7 +20,7 @@ export const Register = ({closeWindow}) => {
         } = Object.fromEntries(new FormData(e.target))
 
         if (password != repeatPass){
-            console.log('error')
+            setValidPass(false)
             return
         }
 
@@ -32,7 +35,7 @@ export const Register = ({closeWindow}) => {
     }
 
     return (
-        <div className="overlay">
+        <div className={classes.overlay}>
             <div className="backdrop" onClick={closeWindow}></div>
             <div className="modal">
                 <div className="user-container">
@@ -61,20 +64,20 @@ export const Register = ({closeWindow}) => {
                             <div className="form-group">
                                 <label htmlFor="password">Password</label>
                                 <div className="input-wrapper">
-                                <input id="password" name="password" type="text"  />
+                                <input id="password" name="password" type="password"  />
                                 </div>
                             </div>
                         </div>
 
                         <div className="form-row">
                             <div className="form-group">
-                                <label htmlFor="repeatPass">Repeat password</label>
+                                <label htmlFor="repeatPass">Confirm password</label>
                                 <div className="input-wrapper">
-                                <input id="repeatPass" name="repeatPass" type="text"  />
+                                <input id="repeatPass" name="repeatPass" type="password"  />
                                 </div>
                             </div>
                         </div>
-                        
+                        {validPass === false && <div className={classes.errorText}>Password not confirmed! Please try again.</div>}
                         <div id="form-actions">
                             <button id="action-save" className="btn" type="submit" >Register</button>
                             <button id="action-cancel" className="btn" type="button" onClick={closeWindow}>
