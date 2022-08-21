@@ -34,6 +34,14 @@ export const UserCollection = () => {
         <>
             <h2 className={classes.pageTitle}>My Collection</h2>
             <div className={classes.galleryPreview}>
+                {dogToEdit 
+                    && 
+                    <EditDog 
+                        dogId={dogToEdit.id} 
+                        dog={dogToEdit} 
+                        closeWindow={closePopUpWindowHandler}
+                    /> 
+                }
                 {hasCollection 
                     ? 
                     dogs.map((dog) => 
@@ -54,15 +62,8 @@ export const UserCollection = () => {
                         ) 
                     : 
                     <div>This collection is empty. Start it by creating a new entry.</div>
-                    }
-                {dogToEdit 
-                    && 
-                    <EditDog 
-                        dogId={dogToEdit.id} 
-                        dog={dogToEdit} 
-                        closeWindow={closePopUpWindowHandler}
-                    /> 
                 }
+                
             </div>
         </>
     )

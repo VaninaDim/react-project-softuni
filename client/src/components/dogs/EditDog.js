@@ -12,7 +12,6 @@ export const EditDog = ({closeWindow, dog}) => {
         console.log('update', dog._id)
 
         const dogRecord = Object.fromEntries(new FormData(e.target))
-        console.log(dogRecord)
 
         dogService.updateDog(dog._id, dogRecord)
         .then(newRecord => {
@@ -20,8 +19,8 @@ export const EditDog = ({closeWindow, dog}) => {
             updateDogRecordHandler(newRecord)
             navigate('/user-collection')
         })
-        .catch(() => {
-            closeWindow()
+        .catch((e) => {
+            console.log(e)
         })
 
         closeWindow()
